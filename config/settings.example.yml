@@ -1,0 +1,10 @@
+raar:
+  url: https://archiv.rabe.ch/api
+  username:
+  password:
+
+shows:
+  info:
+    feed_url: http://rabe.ch/broadcast/info/feed/
+    filter: .//category[text()='Podcasts & Playlists']
+    raar_id: 11
