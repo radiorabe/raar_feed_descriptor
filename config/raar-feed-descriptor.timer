@@ -1,0 +1,12 @@
+# /etc/systemd/system/raar-feed-descriptor.timer
+# sudo systemctl enable raar-feed-descriptor.timer
+# sudo systemctl start raar-feed-descriptor.timer
+
+[Unit]
+Description=Add Raar broadcast descriptions from rabe.ch feed
+
+[Timer]
+OnCalendar=02:00
+
+[Install]
+WantedBy=timers.target

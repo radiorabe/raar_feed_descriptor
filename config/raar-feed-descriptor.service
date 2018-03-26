@@ -1,0 +1,10 @@
+# /etc/systemd/system/raar-feed-descriptor.service
+
+[Unit]
+Description=Add Raar broadcast descriptions from rabe.ch feed
+
+[Service]
+Type=simple
+User=raar-feed-descriptor
+Nice=10
+ExecStart=/usr/bin/scl enable rh-ruby22 -- /opt/raar-feed-descriptor/raar_feed_descriptor.rb

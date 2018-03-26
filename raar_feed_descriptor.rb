@@ -1,3 +1,8 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'bundler/setup'
+Bundler.require(:default)
 require 'yaml'
 require 'json'
 
@@ -113,7 +118,9 @@ class RaarFeedDescriptor
   end
 
   def home
-    File.join(__dir__, '..')
+    File.join(__dir__)
   end
 
 end
+
+RaarFeedDescriptor.new.run
