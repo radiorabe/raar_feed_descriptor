@@ -51,8 +51,10 @@ class RaarFeedDescriptor
   end
 
   def fetch_broadcast(item, show_id)
-    url = broadcast_url(show_id, item[:date])
-    response = RestClient.get(url, accept: JSON_API_CONTENT_TYPE)
+    response = raar_request(:get,
+                            broadcast_url(show_id, item[:date]),
+                            params: { api_token: api_token },
+                            accept: JSON_API_CONTENT_TYPE)
     json = JSON.parse(response.body)
     json['data'].first
   end
@@ -61,17 +63,15 @@ class RaarFeedDescriptor
     year = date.year
     month = rjust(date.month)
     day = rjust(date.day)
-
-    "#{raar_url}/shows/#{show_id}/broadcasts/#{year}/#{month}/#{day}" \
-      "?api_token=#{api_token}"
+    "shows/#{show_id}/broadcasts/#{year}/#{month}/#{day}"
   end
 
   def update_broadcast(broadcast, description)
-    url = "#{raar_url}/broadcasts/#{broadcast['id']}"
-    RestClient.patch(url,
-                     update_payload(broadcast, description).to_json,
-                     content_type: JSON_API_CONTENT_TYPE,
-                     accept: JSON_API_CONTENT_TYPE)
+    raar_request(:patch,
+                 "broadcasts/#{broadcast['id']}",
+                 update_payload(broadcast, description).to_json,
+                 content_type: JSON_API_CONTENT_TYPE,
+                 accept: JSON_API_CONTENT_TYPE)
   end
 
   def update_payload(broadcast, description)
@@ -96,13 +96,32 @@ class RaarFeedDescriptor
       username: settings['raar']['username'],
       password: settings['raar']['password']
     }
-    response = RestClient.post("#{raar_url}/login", credentials)
+    response = raar_request(:post, 'login', credentials)
     json = JSON.parse(response.body)
     json['data']['attributes']
   end
 
+  def raar_request(method, path, payload = nil, headers = {})
+    RestClient::Request.execute(
+      raar_http_options.merge(
+        method: method,
+        payload: payload,
+        url: "#{raar_url}/#{path}",
+        headers: headers
+      )
+    )
+  end
+
   def rjust(val)
     val.to_s.rjust(2, '0')
+  end
+
+  def raar_http_options
+    @raar_http_options ||=
+      (settings['raar']['options'] || {})
+        .each_with_object({}) do |(key, val), hash|
+          hash[key.to_sym] = val
+        end
   end
 
   def raar_url

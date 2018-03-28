@@ -2,6 +2,8 @@ raar:
   url: https://archiv.rabe.ch/api
   username:
   password:
+  options:
+    verify_ssl: 0 # OpenSSL::SSL::VERIFY_NONE
 
 shows:
   info:
