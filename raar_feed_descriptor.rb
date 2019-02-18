@@ -119,9 +119,9 @@ class RaarFeedDescriptor
   def raar_http_options
     @raar_http_options ||=
       (settings['raar']['options'] || {})
-        .each_with_object({}) do |(key, val), hash|
-          hash[key.to_sym] = val
-        end
+      .each_with_object({}) do |(key, val), hash|
+        hash[key.to_sym] = val
+      end
   end
 
   def raar_url

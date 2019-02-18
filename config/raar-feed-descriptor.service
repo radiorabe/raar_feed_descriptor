@@ -8,4 +8,4 @@ Type=simple
 User=raar-feed-descriptor
 Nice=10
 WorkingDirectory=/opt/raar-feed-descriptor
-ExecStart=/usr/bin/scl enable rh-ruby22 -- ./raar_feed_descriptor.rb
+ExecStart=/usr/bin/scl enable rh-ruby25 -- ./raar_feed_descriptor.rb

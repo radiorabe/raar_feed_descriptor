@@ -9,7 +9,7 @@ See configuration in `config/settings.example.yml`. Copy this file to `config/se
 
 ## Initial
 
-* Install dependencies: `yum install gcc gcc-c++ glibc-headers rh-ruby22-ruby-devel rh-ruby22-rubygem-bundler libxml2-devel libxslt-devel`
+* Install dependencies: `yum install gcc gcc-c++ glibc-headers rh-ruby25-ruby-devel rh-ruby25-rubygem-bundler libxml2-devel libxslt-devel`
 * Create a user on the server:
   * `useradd --home-dir /opt/raar-feed-descriptor --create-home --user-group raar-feed-descriptor`
   * `usermod -a -G raar-feed-descriptor <your-ssh-user>`
@@ -24,11 +24,11 @@ See configuration in `config/settings.example.yml`. Copy this file to `config/se
 * Prepare the dependencies on your local machine: `bundle package --all-platforms`
 * SCP or Rsync all files: `rsync -avz --exclude .git --exclude .bundle --exclude config/settings.yml . raar-feed-descriptor@server:/opt/raar-feed-descriptor/`.
 * Install the dependencies on the server (as `raar-feed-descriptor` in `/opt/raar-feed-descriptor`):
-  `source /opt/rh/rh-ruby22/enable && bundle install --deployment --local`
+  `source /opt/rh/rh-ruby25/enable && bundle install --deployment --local`
 
 
 ## License
 
 raar_feed_descriptor is released under the terms of the GNU Affero General Public License.
-Copyright 2018 Radio RaBe.
+Copyright 2018-2019 Radio RaBe.
 See `LICENSE` for further information.
