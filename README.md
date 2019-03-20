@@ -11,9 +11,9 @@ See configuration in `config/settings.example.yml`. Copy this file to `config/se
 
 * Install dependencies: `yum install gcc gcc-c++ glibc-headers rh-ruby25-ruby-devel rh-ruby25-rubygem-bundler libxml2-devel libxslt-devel`
 * Create a user on the server:
-  * `useradd --home-dir /opt/raar-feed-descriptor --create-home --user-group raar-feed-descriptor`
-  * `usermod -a -G raar-feed-descriptor <your-ssh-user>`
-  * Add your SSH public key to `/opt/raar-feed-descriptor/.ssh/authorized_keys`.
+  * `useradd --home-dir /opt/raar-scripts --create-home --user-group raar-scripts`
+  * `usermod -a -G raar-scripts <your-ssh-user>`
+  * Add your SSH public key to `/opt/raar-scripts/.ssh/authorized_keys`.
 * Perform the every time steps.
 * Copy `settings.example.yml` to `settings.yml` and add the missing credentials.
 * Copy both systemd files from `config` to `/etc/systemd/system/`.
@@ -22,8 +22,8 @@ See configuration in `config/settings.example.yml`. Copy this file to `config/se
 ## Every time
 
 * Prepare the dependencies on your local machine: `bundle package --all-platforms`
-* SCP or Rsync all files: `rsync -avz --exclude .git --exclude .bundle --exclude config/settings.yml . raar-feed-descriptor@server:/opt/raar-feed-descriptor/`.
-* Install the dependencies on the server (as `raar-feed-descriptor` in `/opt/raar-feed-descriptor`):
+* SCP or Rsync all files: `rsync -avz --exclude .git --exclude .bundle --exclude config/settings.yml . raar-scripts@server:/opt/raar-feed-descriptor/`.
+* Install the dependencies on the server (as `raar-scripts` in `/opt/raar-feed-descriptor`):
   `source /opt/rh/rh-ruby25/enable && bundle install --deployment --local`
 
 

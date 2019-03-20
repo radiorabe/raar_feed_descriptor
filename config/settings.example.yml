@@ -10,3 +10,7 @@ shows:
     feed_url: http://rabe.ch/broadcast/info/feed/
     filter: .//category[text()='Podcasts & Playlists']
     raar_id: 11
+
+importer:
+  log_level: info
+  log: syslog

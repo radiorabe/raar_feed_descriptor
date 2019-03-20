@@ -5,7 +5,7 @@ Description=Add Raar broadcast descriptions from rabe.ch feed
 
 [Service]
 Type=simple
-User=raar-feed-descriptor
+User=raar-scripts
 Nice=10
 WorkingDirectory=/opt/raar-feed-descriptor
 ExecStart=/usr/bin/scl enable rh-ruby25 -- ./raar_feed_descriptor.rb
