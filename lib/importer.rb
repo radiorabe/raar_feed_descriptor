@@ -1,6 +1,5 @@
 require 'yaml'
 require 'json'
-require 'syslog/logger'
 
 require_relative 'description'
 require_relative 'raar_client'
@@ -49,7 +48,12 @@ class Importer
 
   def create_logger
     if settings.dig('importer', 'log') == 'syslog'
-      Syslog::Logger.new('raar-feed-descriptor')
+      require 'syslog/logger'
+      Syslog::Logger.new('raar-feed-descriptor').tap do |logger|
+        logger.formatter = proc { |severity, _datetime, _prog, msg|
+          "#{Logger::SEV_LABEL[severity]} #{msg}"
+        }
+      end
     else
       Logger.new(STDOUT)
     end
