@@ -55,7 +55,7 @@ class Importer
         }
       end
     else
-      Logger.new(STDOUT)
+      Logger.new($stdout)
     end
   end
 

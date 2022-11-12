@@ -15,9 +15,7 @@ class FeedClient
     feed = RestClient.get(config['feed_url']).to_s
     doc = Nokogiri::XML(feed)
     items = doc.xpath('//item')
-    if config['filter']
-      items = items.reject { |item| item.xpath(config['filter']).empty? }
-    end
+    items = items.reject { |item| item.xpath(config['filter']).empty? } if config['filter']
     items
   end
 
