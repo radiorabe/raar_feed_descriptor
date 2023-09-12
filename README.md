@@ -32,5 +32,5 @@ See configuration in `config/settings.example.yml`. Copy this file to `config/se
 ## License
 
 raar_feed_descriptor is released under the terms of the GNU Affero General Public License.
-Copyright 2018-2022 Radio RaBe.
+Copyright 2018-2023 Radio RaBe.
 See `LICENSE` for further information.
