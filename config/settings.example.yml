@@ -1,3 +1,12 @@
+
+importer:
+  # search broadcast of show in the following days relative to the post's date.
+  adjacent_days: 0, -1, -2, 1, 2, 3
+  filters:
+    info: month_in_title
+  log_level: info
+  log: syslog
+
 raar:
   url: https://archiv.rabe.ch/api
   username:
@@ -5,12 +14,7 @@ raar:
   options:
     verify_ssl: 0 # OpenSSL::SSL::VERIFY_NONE
 
-shows:
-  info:
-    feed_url: http://rabe.ch/broadcast/info/feed/
-    filter: .//category[text()='Podcasts & Playlists']
-    raar_id: 11
+directus:
+  posts: https://data.rabe.ch/items/post?sort=-publish_date&fields=content,program,title,date_published,status
+  show: https://data.rabe.ch/items/programs?filter[slug][_eq]=%slug%&fields=slug,name
 
-importer:
-  log_level: info
-  log: syslog

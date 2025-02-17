@@ -9,31 +9,19 @@ class RaarClient
     @logger = logger
   end
 
-  def update_empty(description, show_id)
-    broadcast = fetch_broadcast(description, show_id)
-    if broadcast && broadcast['attributes']['details'].to_s.strip.empty?
-      update_broadcast(broadcast, description.text)
-      logger.info("Updated description for Show##{show_id} " \
-                  "at #{description.date}")
-    end
+  def fetch_show(title)
+    title = stem_title(title)
+    search_shows(title)
+      .find { |show| same_title?(show, title) }
   end
 
-  private
-
-  def fetch_broadcast(description, show_id)
+  def fetch_broadcast(show_id, date)
     response = raar_request(:get,
-                            broadcast_date_url(show_id, description.date),
-                            params: { api_token: api_token },
+                            broadcast_date_url(show_id, date),
+                            nil,
                             accept: JSON_API_CONTENT_TYPE)
     json = JSON.parse(response.body)
     json['data'].first
-  end
-
-  def broadcast_date_url(show_id, date)
-    year = date.year
-    month = rjust(date.month)
-    day = rjust(date.day)
-    "shows/#{show_id}/broadcasts/#{year}/#{month}/#{day}"
   end
 
   def update_broadcast(broadcast, details)
@@ -42,6 +30,27 @@ class RaarClient
                  update_payload(broadcast, details).to_json,
                  content_type: JSON_API_CONTENT_TYPE,
                  accept: JSON_API_CONTENT_TYPE)
+  end
+
+  private
+
+  def search_shows(title)
+    response = raar_request(
+      :get,
+      'shows',
+      nil,
+      params: { q: title },
+      accept: JSON_API_CONTENT_TYPE
+    )
+    json = JSON.parse(response.body)
+    json['data']
+  end
+
+  def broadcast_date_url(show_id, date)
+    year = date.year
+    month = rjust(date.month)
+    day = rjust(date.day)
+    "shows/#{show_id}/broadcasts/#{year}/#{month}/#{day}"
   end
 
   def update_payload(broadcast, details)
@@ -55,6 +64,14 @@ class RaarClient
         }
       }
     }
+  end
+
+  def same_title?(show, title)
+    stem_title(show['attributes']['name']) == title
+  end
+
+  def stem_title(string)
+    string.downcase.gsub(/[^a-z0-9]/, ' ')
   end
 
   def api_token

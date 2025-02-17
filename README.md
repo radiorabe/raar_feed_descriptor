@@ -1,6 +1,6 @@
 # raar_feed_descriptor
 
-Store descriptions for certain shows from the rabe.ch website feed into archiv.rabe.ch.
+Store descriptions for certain broadcasts from the rabe.ch website feed into archiv.rabe.ch.
 
 See configuration in `config/settings.example.yml`. Copy this file to `config/settings.yml`, complete it and run `raar_feed_descriptor.rb`.
 
@@ -24,7 +24,7 @@ See configuration in `config/settings.example.yml`. Copy this file to `config/se
 ## Every time
 
 * Prepare the dependencies on your local machine: `bundle package --all-platforms`
-* SCP or Rsync all files: `rsync -avz --exclude .git --exclude .bundle --exclude config/settings.yml . raar-scripts@server:/opt/raar-feed-descriptor/`.
+* SCP or Rsync all files: `rsync -avz --exclude .git --exclude .bundle --exclude .ruby-lsp --exclude config/settings.yml . raar-scripts@server:/opt/raar-feed-descriptor/`.
 * Install the dependencies on the server (as `raar-scripts` in `/opt/raar-feed-descriptor`):
   `source /opt/rh/rh-ruby30/enable && bundle install --local`
 
@@ -32,5 +32,5 @@ See configuration in `config/settings.example.yml`. Copy this file to `config/se
 ## License
 
 raar_feed_descriptor is released under the terms of the GNU Affero General Public License.
-Copyright 2018-2023 Radio RaBe.
+Copyright 2018-2025 Radio RaBe.
 See `LICENSE` for further information.
